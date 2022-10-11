@@ -88,6 +88,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
+    public @NotNull Collection<Account> findByPersonId(@NotNull Long personId) {
+        return accountRepository.findByPersonId(personId);
+    }
+
+    @Override
+    @Transactional
     public List<Account> findAll() {
         return accountRepository.findAll();
     }

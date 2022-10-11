@@ -45,11 +45,19 @@ public class Account {
     @Column(name = "currency")
     protected CurrencyType currency;
 
-    public Account(Long l, String s, Money money) {
+    @NotNull
+    @Getter
+    @Setter
+    @Column(name = "person_id")
+    private Long personId;
+
+
+    public Account(Long l, String s, Money money, Long personId) {
         id = l;
         num = s;
         balance = ModelUtils.moneyToBigDecimal(money);
         currency = CurrencyType.valueOf(money.getCurrencyUnit().getCode());
+        this.personId = personId;
     }
 
 

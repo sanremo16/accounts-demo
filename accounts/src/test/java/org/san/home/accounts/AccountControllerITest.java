@@ -54,9 +54,9 @@ public class AccountControllerITest {
     public void getAll() {
         this.mockMvc.perform(get("http://localhost:"+ port + "/accounts")).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.accountDtoList", hasSize(2)))
-                .andExpect(jsonPath("$._embedded.accountDtoList[*].id", containsInAnyOrder(100, 200)))
-                .andExpect(jsonPath("$._embedded.accountDtoList[*]._links.self.href", hasSize(2)));
+                .andExpect(jsonPath("$._embedded.accountDtoList", hasSize(3)))
+                .andExpect(jsonPath("$._embedded.accountDtoList[*].id", containsInAnyOrder(100, 200, 300)))
+                .andExpect(jsonPath("$._embedded.accountDtoList[*]._links.self.href", hasSize(3)));
     }
 
     @Test
@@ -74,13 +74,13 @@ public class AccountControllerITest {
     public void delete() {
         this.mockMvc.perform(MockMvcRequestBuilders.delete("http://localhost:"+ port + "/accounts/11111111111111111111")).andDo(print())
                 .andExpect(status().isOk());
-        assertEquals(1, accountService.findAll().size());
+        assertEquals(2, accountService.findAll().size());
     }
 
     @Test
     @SneakyThrows
     public void add() {
-        String s = "{\"num\":\"555\",\"currencyType\":\"USD\"}";
+        String s = "{\"num\":\"555\",\"currencyType\":\"USD\", \"personId\":\"555\"}";
 
         this.mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:"+ port + "/accounts")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

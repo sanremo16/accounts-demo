@@ -24,5 +24,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     <S extends Account> Collection<S> findByNum(@Param("num") String num);
 
+    <S extends Account> Collection<S> findByPersonId(@Param("person_id") Long personId);
+
     void deleteByNum(@Param("num") String num);
 }

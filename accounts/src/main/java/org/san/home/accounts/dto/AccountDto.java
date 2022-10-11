@@ -28,4 +28,6 @@ public class AccountDto extends RepresentationModel<AccountDto> {
     @Valid
     @Schema(description = "Account balance")
     private MoneyDto balance;
+    @Schema(description = "Person global ID")
+    private Long personId;
 }

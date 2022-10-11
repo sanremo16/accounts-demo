@@ -5,11 +5,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.money.Money;
+import org.san.home.accounts.client.PersonsRestClient;
+import org.san.home.accounts.dto.*;
 import org.san.home.accounts.service.error.WrapException;
-import org.san.home.accounts.dto.AccountDto;
-import org.san.home.accounts.dto.AccountMapper;
-import org.san.home.accounts.dto.MoneyDto;
-import org.san.home.accounts.dto.MoneyMapper;
 import org.san.home.accounts.model.Account;
 import org.san.home.accounts.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.san.home.accounts.error.AccountsErrorCode.*;
@@ -42,6 +41,8 @@ public class AccountController {
     private AccountMapper accountMapper;
     @Autowired
     private MoneyMapper moneyMapper;
+    @Autowired
+    private PersonsRestClient personsRestClient;
 
     //@Timed(value = "findAll", description = "findAll method time")
     @Operation(summary = "View a list of accounts")
@@ -135,5 +136,20 @@ public class AccountController {
                 accountService.transfer(srcAccountNumber, dstAccountNumber,
                         moneyMapper.map(new MoneyDto(moneyMajor, moneyMinor), Money.class)),
                 AccountDto.class);
+    }
+
+    @Operation(summary = "View a list of filtered accounts by person")
+    @WrapException(errorCode = FIND_FAILED)
+    @PostMapping(value = "/filtered/byPerson/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public CollectionModel<AccountDto> findByPerson(@Valid @RequestBody PersonDto personDto) {
+        Collection<AccountDto> accounts =
+                accountService.findByPersonId(
+                        Objects.requireNonNull(personsRestClient.searchFirst(personDto)).getGlobalId())
+                .stream()
+                .map(account -> accountMapper.map(account, AccountDto.class))
+                .map(accountDto -> accountDto.add(linkTo(methodOn(AccountController.class).get(accountDto.getNum())).withSelfRel()))
+                .collect(Collectors.toList());
+        return CollectionModel.of(accounts, linkTo(methodOn(AccountController.class).getAll()).withSelfRel());
     }
 }

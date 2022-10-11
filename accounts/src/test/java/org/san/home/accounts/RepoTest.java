@@ -36,10 +36,10 @@ public class RepoTest {
     @Test
     @DatabaseSetup({"/dataset/account.xml"})
     public void testAccountRepo() {
-        Account a1 = new Account(Long.valueOf(100), "11111111111111111111", ModelUtils.bigDecimalToMoney(new BigDecimal(10), CurrencyType.RUR));
+        Account a1 = new Account(Long.valueOf(100), "11111111111111111111", ModelUtils.bigDecimalToMoney(new BigDecimal(10), CurrencyType.RUR), Long.valueOf(100));
         assertEquals(a1, accountRepository.findById(a1.getId()).get());
 
-        Account a2 = new Account(null, "55555555555555555555", ModelUtils.bigDecimalToMoney(new BigDecimal(20), CurrencyType.USD));
+        Account a2 = new Account(null, "55555555555555555555", ModelUtils.bigDecimalToMoney(new BigDecimal(20), CurrencyType.USD), Long.valueOf(200));
         a2 = accountRepository.saveAndFlush(a2);
         assertEquals(a2, accountRepository.findById(a2.getId()).get());
 

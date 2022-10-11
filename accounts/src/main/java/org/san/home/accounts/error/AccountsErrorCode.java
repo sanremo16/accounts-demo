@@ -20,7 +20,8 @@ public enum AccountsErrorCode implements ErrorCode {
     DELETE_ACCOUNT_FAILED(12, "delete_account_failed"),
     UNSUPPORTED_CURRENCY(13, "unsupported_currency"),
     UNDEFINED(0, "undefined"),
-    VALIDATION_ERROR(14, "validation_error");
+    VALIDATION_ERROR(14, "validation_error"),
+    FIND_FAILED(15, "find_failed"),    ;
 
     private Integer code;
     private String name;

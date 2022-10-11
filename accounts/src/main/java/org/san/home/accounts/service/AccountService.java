@@ -4,8 +4,8 @@ import org.joda.money.Money;
 import org.san.home.accounts.model.Account;
 
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Base account service
@@ -14,6 +14,8 @@ import java.util.Optional;
 public interface AccountService {
 
     @NotNull Account getByAccountNumber(@NotNull String accountNumber);
+
+    @NotNull Collection<Account> findByPersonId(@NotNull Long personId);
 
     List<Account> findAll();
 

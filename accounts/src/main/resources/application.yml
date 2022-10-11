@@ -57,3 +57,8 @@ management:
             enabled: true
 springdoc:
     show-actuator: false
+app:
+    persons:
+        service:
+            host: localhost
+            port: 8083
