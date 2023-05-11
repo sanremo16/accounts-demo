@@ -26,7 +26,7 @@ public class PersonsRestClient {
 
     public PersonDto searchFirst(final PersonDto personDto) {
         return webClient.get()
-                .uri("/filteredpersons?" + personDto.toUrlParams())
+                .uri("/persons?" + personDto.toUrlParams())
                 .retrieve()
                 .bodyToFlux(PersonDto.class)
                 .blockFirst();

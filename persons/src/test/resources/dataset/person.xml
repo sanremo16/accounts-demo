@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+    <person id="100000" global_id="100000" first_name="Alex" second_name="Alexeev" third_name="Alexeevich"/>
+    <person id="200000" global_id="200000" first_name="Ivan" second_name="Ivanov" third_name="Ivanovich"/>
+    <person id="300000" global_id="300000" first_name="Fedor" second_name="Fedorov" third_name="Fedorovich"/>
+</dataset>
