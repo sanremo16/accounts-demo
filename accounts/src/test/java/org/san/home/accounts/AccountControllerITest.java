@@ -2,7 +2,10 @@ package org.san.home.accounts;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.tomakehurst.wiremock.client.WireMock;
+import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import lombok.SneakyThrows;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.san.home.accounts.service.AccountService;
@@ -21,6 +24,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import javax.transaction.Transactional;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertEquals;
@@ -45,8 +49,12 @@ public class AccountControllerITest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Rule
+    public WireMockRule wiremock = new WireMockRule(8083);
+
     @Autowired
     private AccountService accountService;
+
 
     @Test
     @SneakyThrows
@@ -176,6 +184,26 @@ public class AccountControllerITest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errorCode", is(14)));
+    }
+
+    @Test
+    @SneakyThrows
+    @DatabaseSetup({"/dataset/account.xml"})
+    public void findByPerson() {
+        String person = "[{\"id\": 100,\"globalId\": 100,\"firstName\": \"Alex\",\"secondName\": \"Alexeev\",\"thirdName\": \"Alexeevich\"}]";
+        stubFor(WireMock.get(urlPathMatching("/persons.*"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(person)));
+
+        String s = "{\"globalId\": 100}";
+        this.mockMvc.perform(post("http://localhost:"+ port + "/accounts/filtered/byPerson/")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(s))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._embedded.accountDtoList", hasSize(2)))
+                .andExpect(jsonPath("$._embedded.accountDtoList[*].id", containsInAnyOrder(100, 300)));
     }
 
 }
