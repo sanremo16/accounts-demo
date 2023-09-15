@@ -23,3 +23,5 @@ unitils-local.properties
 #ignore grafana and prometheus
 scripts/grafana
 scripts/prometheus
+#ignore h2 database files
+.*.db

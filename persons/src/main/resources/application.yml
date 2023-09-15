@@ -14,7 +14,10 @@ spring:
             ddl-auto: create-drop
     datasource:
         name: persons
-        url: jdbc:h2:mem:mydb;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS persons
+        #url: jdbc:h2:mem:mydb;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;INIT=CREATE SCHEMA IF NOT EXISTS persons
+        url: jdbc:h2:file:./persons/src/main/resources/data/persons;MODE=PostgreSQL;AUTO_SERVER=true;INIT=CREATE SCHEMA IF NOT EXISTS persons
+        username: sa
+        password: password
     h2:
         console:
             enabled: true
