@@ -17,7 +17,6 @@ spring:
         url: jdbc:h2:file:./accounts/src/main/resources/data/accounts;MODE=PostgreSQL;AUTO_SERVER=true;INIT=CREATE SCHEMA IF NOT EXISTS accounts
         username: sa
         password: password
-        #jdbc:h2:file:./persons/src/main/resources/data/persons;MODE=PostgreSQL;AUTO_SERVER=true;INIT=CREATE SCHEMA IF NOT EXISTS persons
     h2:
         console:
             enabled: true
