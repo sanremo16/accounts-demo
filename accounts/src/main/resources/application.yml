@@ -14,7 +14,7 @@ spring:
             ddl-auto: create-drop
     datasource:
         name: accounts
-        url: jdbc:h2:file:./accounts/src/main/resources/data/accounts;MODE=PostgreSQL;AUTO_SERVER=true;INIT=CREATE SCHEMA IF NOT EXISTS accounts
+        url: jdbc:h2:file:./src/main/resources/data/accounts;MODE=PostgreSQL;AUTO_SERVER=true;INIT=CREATE SCHEMA IF NOT EXISTS accounts
         username: sa
         password: password
         #jdbc:h2:file:./persons/src/main/resources/data/persons;MODE=PostgreSQL;AUTO_SERVER=true;INIT=CREATE SCHEMA IF NOT EXISTS persons
