@@ -16,6 +16,9 @@
         <app.service.id>persons</app.service.id>
         <app.api.version>1.0.0</app.api.version>
         <app.release.id>0.0.1</app.release.id>
+        <app.server.port>8083</app.server.port>
+        <start-class>org.san.home.persons.PersonsApplication</start-class>
+        <base-image>openjdk:17-jdk-alpine</base-image>
     </properties>
 
     <dependencies>
@@ -202,6 +205,37 @@
                         <nonFilteredFileExtension>db</nonFilteredFileExtension>
                     </nonFilteredFileExtensions>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <container>
+                        <mainClass>${start-class}</mainClass>
+                        <ports>
+                            <port>${app.server.port}</port>
+                        </ports>
+                        <environment>
+                            <application.title>${project.name}</application.title>
+                            <application.version>${project.version}</application.version>
+                        </environment>
+                    </container>
+                    <from>
+                        <image>${base-image}</image>
+                    </from>
+                    <to>
+                        <image>${project.name}:${project.version}</image>
+                    </to>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>dockerBuild</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <resources>
