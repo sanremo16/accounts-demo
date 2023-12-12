@@ -20,7 +20,7 @@ public class PersonsRestClient {
     private WebClient webClient;
 
     @PostConstruct
-    private void initialize() {
+    public void initialize() {
         webClient = WebClient.create("http://" + personsHost + ":" + personsPort);
     }
 
@@ -30,5 +30,9 @@ public class PersonsRestClient {
                 .retrieve()
                 .bodyToFlux(PersonDto.class)
                 .blockFirst();
+    }
+
+    public void setPersonsHost(String host) {
+        this.personsHost = host;
     }
 }

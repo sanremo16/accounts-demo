@@ -18,7 +18,6 @@
         <app.release.id>0.0.1</app.release.id>
         <app.server.port>8083</app.server.port>
         <start-class>org.san.home.persons.PersonsApplication</start-class>
-        <base-image>openjdk:17-jdk-alpine</base-image>
     </properties>
 
     <dependencies>
@@ -172,14 +171,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.4</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build-info</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>com.mysema.maven</groupId>
@@ -230,7 +221,7 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>install</phase>
+                        <phase>${jib-image-phase}</phase>
                         <goals>
                             <goal>dockerBuild</goal>
                         </goals>

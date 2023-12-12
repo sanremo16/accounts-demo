@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.san.home.accounts.client.PersonsRestClient;
 import org.san.home.accounts.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -54,6 +55,9 @@ public class AccountControllerITest {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private PersonsRestClient personsRestClient;
 
 
     @Test
@@ -197,6 +201,8 @@ public class AccountControllerITest {
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                         .withBody(person)));
 
+        personsRestClient.setPersonsHost("localhost");
+        personsRestClient.initialize();
         String s = "{\"globalId\": 100}";
         this.mockMvc.perform(post("http://localhost:"+ port + "/accounts/filtered/byPerson/")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)

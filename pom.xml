@@ -21,6 +21,24 @@
         <module>persons</module>
     </modules>
 
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <app.persons.host>localhost</app.persons.host>
+            </properties>
+        </profile>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <app.persons.host>persons</app.persons.host>
+            </properties>
+        </profile>
+    </profiles>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -31,6 +49,8 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <querydsl.version>5.0.0</querydsl.version>
+        <jib-image-phase>none</jib-image-phase>
+        <base-image>openjdk:17-jdk-alpine</base-image>
     </properties>
 
     <dependencyManagement>
@@ -140,22 +160,6 @@
                         <version>2.22.2</version>
                     </dependency>
                 </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <!--    Prevent plugin goals for child modules    -->
-                    <skip>true</skip>
-                </configuration>
-                <!--version>2.6.4</version-->
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build-info</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
