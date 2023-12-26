@@ -21,24 +21,6 @@
         <module>persons</module>
     </modules>
 
-    <profiles>
-        <profile>
-            <id>local</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <app.persons.host>localhost</app.persons.host>
-            </properties>
-        </profile>
-        <profile>
-            <id>docker</id>
-            <properties>
-                <app.persons.host>persons</app.persons.host>
-            </properties>
-        </profile>
-    </profiles>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

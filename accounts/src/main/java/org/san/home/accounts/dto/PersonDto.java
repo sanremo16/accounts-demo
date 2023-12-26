@@ -16,9 +16,10 @@ public class PersonDto {
     private String thirdName;
 
     public String toUrlParams() {
-        return globalId != null ? "globalId=" + globalId : ""
-               + firstName != null ? "&firstName=" + firstName : ""
-               + secondName != null ? "&secondName=" + secondName : ""
-               + thirdName != null ? "&thirdName=" + thirdName : "";
+        String res = (globalId != null ? "globalId=".concat(globalId.toString()) : "")
+                .concat(firstName != null ? "&firstName=" + firstName : "")
+                .concat(secondName != null ? "&secondName=" + secondName : "")
+                .concat(thirdName != null ? "&thirdName=" + thirdName : "");
+        return res.startsWith("&") ? res.substring(1) : res;
     }
 }

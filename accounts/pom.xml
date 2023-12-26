@@ -16,8 +16,6 @@
         <app.service.id>accounts</app.service.id>
         <app.api.version>1.0.0</app.api.version>
         <app.release.id>0.0.1</app.release.id>
-        <app.server.port>8082</app.server.port>
-        <app.persons.port>8083</app.persons.port>
         <start-class>org.san.home.accounts.AccountsApplication</start-class>
     </properties>
 
