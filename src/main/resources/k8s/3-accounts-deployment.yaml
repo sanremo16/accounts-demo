@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accounts-deployment
+  namespace: accounts-demo
+  labels:
+    app: accounts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: accounts
+  template:
+    metadata:
+      labels:
+        app: accounts
+        version: base
+    spec:
+      containers:
+      - name: accounts
+        image: localhost:5000/accounts:latest
+        imagePullPolicy: Always
+        envFrom:
+          - configMapRef:
+              name: accounts-cm
+        ports:
+        - containerPort: 8082
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: persons-deployment
+  namespace: accounts-demo
+  labels:
+    app: persons
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: persons
+  template:
+    metadata:
+      labels:
+        app: persons
+        version: base
+    spec:
+      containers:
+        - name: persons
+          image: localhost:5000/persons:latest
+          imagePullPolicy: Always
+          #envFrom:
+          #  - configMapRef:
+          #      name: persons-cm
+          ports:
+            - containerPort: 8083

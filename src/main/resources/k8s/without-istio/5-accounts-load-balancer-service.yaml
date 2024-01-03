@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: accounts-load-balancer-service
+  namespace: accounts-demo
+  labels:
+    app: accounts-load-balancer
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8082
+      targetPort: 8082
+      protocol: TCP
+  selector:
+    app: accounts
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: persons-load-balancer-service
+  namespace: accounts-demo
+  labels:
+    app: persons-load-balancer
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8083
+      targetPort: 8083
+      protocol: TCP
+  selector:
+    app: persons

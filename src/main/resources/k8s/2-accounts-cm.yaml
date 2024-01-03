@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: accounts-cm
+  namespace: accounts-demo
+data:
+  app.accounts-demo.accounts.service.protocol: 'http'
+  app.accounts-demo.accounts.service.host: 'accounts-service.accounts-demo.svc.cluster.local'
+  app.accounts-demo.accounts.service.port: '8082'
+  app.accounts-demo.persons.service.protocol: 'http'
+  app.accounts-demo.persons.service.host: 'persons-service.accounts-demo.svc.cluster.local'
+  app.accounts-demo.persons.service.port: '8083'
